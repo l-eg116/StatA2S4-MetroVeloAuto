@@ -37,3 +37,4 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+comptage-velo-donnees-compteurs.xlsx
