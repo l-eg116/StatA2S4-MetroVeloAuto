@@ -40,3 +40,6 @@ for(compteur in compteurs_velos$Compteur){
   compteurs_velos$StationProche[compteurs_velos$Compteur == compteur] <- freq_stations$Station[which.min(distance(x, y, freq_stations$GeoPoint_1, freq_stations$GeoPoint_2))]
 }
 compteurs_velos$CompteurStation <- freq_stations$Trafic[match(compteurs_velos$StationProche, freq_stations$Station)]
+
+# Plots
+plot(compteurs_velos$Total.sur.2021, compteurs_velos$CompteurStation)
