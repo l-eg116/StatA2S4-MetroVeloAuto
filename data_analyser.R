@@ -31,3 +31,12 @@ freq_stations = freq_stations[!is.na(freq_stations$GeoPoint_1), ]
 
 compteurs_velos = read.csv("comptage-velo-donnees-compteurs.csv", header = TRUE, sep = ",") # Fréquentation de certains points en vélo
 compteurs_velos <- cSplit(compteurs_velos, "Coordonnees", ",")
+
+# Fusion en un maxi jeu de données
+for(compteur in compteurs_velos$Compteur){
+  x = compteurs_velos$Coordonnees_1[compteurs_velos$Compteur == compteur]
+  y = compteurs_velos$Coordonnees_2[compteurs_velos$Compteur == compteur]
+  
+  compteurs_velos$StationProche[compteurs_velos$Compteur == compteur] <- freq_stations$Station[which.min(distance(x, y, freq_stations$GeoPoint_1, freq_stations$GeoPoint_2))]
+}
+compteurs_velos$CompteurStation <- freq_stations$Trafic[match(compteurs_velos$StationProche, freq_stations$Station)]
