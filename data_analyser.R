@@ -2,6 +2,8 @@
 # Packages
 if (!require("splitstackshape")) install.packages("splitstackshape")
 library(splitstackshape)
+if (!require("psych")) install.packages("psych")
+library(psych)
 
 # Functions
 distance = function(x1, y1, x2, y2){
@@ -50,4 +52,14 @@ for(station in freq_stations$Station){
 freq_stations$CmptVelo <- compteurs_velos$Total.sur.2021[match(freq_stations$CmptVeloID, compteurs_velos$Compteur)]
 
 # Plots
+compteurs_velos = compteurs_velos[compteurs_velos$CompteurStation < 10000000, ]
+compteurs_velos = compteurs_velos[compteurs_velos$Total.sur.2021 < 1500000, ]
 plot(compteurs_velos$Total.sur.2021, compteurs_velos$CompteurStation)
+
+corr.test(compteurs_velos[, c("CompteurStation", "Total.sur.2021")])
+
+freq_stations = freq_stations[freq_stations$Trafic < 11000000, ]
+freq_stations = freq_stations[freq_stations$CmptVelo < 1500000, ]
+plot(freq_stations$Trafic, freq_stations$CmptVelo)
+
+corr.test(freq_stations[, c("Trafic", "CmptVelo")])
