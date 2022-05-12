@@ -56,10 +56,10 @@ compteurs_velos = compteurs_velos[compteurs_velos$CompteurStation < 10000000, ]
 compteurs_velos = compteurs_velos[compteurs_velos$Total.sur.2021 < 1500000, ]
 plot(compteurs_velos$Total.sur.2021, compteurs_velos$CompteurStation)
 
-corr.test(compteurs_velos[, c("CompteurStation", "Total.sur.2021")])
+cor(compteurs_velos$CompteurStation, compteurs_velos$Total.sur.2021)
 
 freq_stations = freq_stations[freq_stations$Trafic < 11000000, ]
 freq_stations = freq_stations[freq_stations$CmptVelo < 1500000, ]
 plot(freq_stations$Trafic, freq_stations$CmptVelo)
 
-corr.test(freq_stations[, c("Trafic", "CmptVelo")])
+cor(freq_stations$Trafic, freq_stations$CmptVelo)
