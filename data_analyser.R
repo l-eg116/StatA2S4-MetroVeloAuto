@@ -34,22 +34,26 @@ freq_stations = freq_stations[!is.na(freq_stations$GeoPoint_1), ]
 compteurs_velos = read.csv("comptage-velo-donnees-compteurs.csv", header = TRUE, sep = ",") # Fréquentation de certains points en vélo
 compteurs_velos <- cSplit(compteurs_velos, "Coordonnees", ",")
 
+compteurs_voitures = read.csv("comptages-routiers-permanents_cleaned.csv", header = TRUE, sep = ",") # Fréquentations de points en voiture
+
 # Fusion en un maxi jeu de données
-for(compteur in compteurs_velos$Compteur){
+for(compteur in compteurs_velos$Compteur){ # Stations et compteurs voiture les plus proche de chaque compteur vélo
   x = compteurs_velos$Coordonnees_1[compteurs_velos$Compteur == compteur]
   y = compteurs_velos$Coordonnees_2[compteurs_velos$Compteur == compteur]
   
   compteurs_velos$StationProche[compteurs_velos$Compteur == compteur] <- freq_stations$Station[which.min(distance(x, y, freq_stations$GeoPoint_1, freq_stations$GeoPoint_2))]
+  compteurs_velos$CmptVoitProche[compteurs_velos$Compteur == compteur] <- compteurs_voitures$ï..Libelle[which.min(distance(x, y, compteurs_voitures$geo_point.1, compteurs_voitures$geo_point.2))]
 }
 compteurs_velos$CompteurStation <- freq_stations$Trafic[match(compteurs_velos$StationProche, freq_stations$Station)]
+compteurs_velos$CompteurVoiture <- compteurs_voitures$Count[match(compteurs_velos$CmptVoitProche, compteurs_voitures$ï..Libelle)]
 
-for(station in freq_stations$Station){
+for(station in freq_stations$Station){ # Compteur voiture le plus proche de chaque station
   x = freq_stations$GeoPoint_1[freq_stations$Station == station]
   y = freq_stations$GeoPoint_2[freq_stations$Station == station]
   
-  freq_stations$CmptVeloID[freq_stations$Station == station] <- compteurs_velos$Compteur[which.min(distance(x, y, compteurs_velos$Coordonnees_1, compteurs_velos$Coordonnees_2))]
+  freq_stations$CmptVoitureID[freq_stations$Station == station] <- compteurs_voitures$ï..Libelle[which.min(distance(x, y, compteurs_voitures$geo_point.1, compteurs_voitures$geo_point.2))]
 }
-freq_stations$CmptVelo <- compteurs_velos$Total.sur.2021[match(freq_stations$CmptVeloID, compteurs_velos$Compteur)]
+freq_stations$CmptVoiture <- compteurs_voitures$Count[match(freq_stations$CmptVoitureID, compteurs_voitures$ï..Libelle)]
 
 # Plots
 compteurs_velos = compteurs_velos[compteurs_velos$CompteurStation < 10000000, ]
@@ -57,9 +61,3 @@ compteurs_velos = compteurs_velos[compteurs_velos$Total.sur.2021 < 1500000, ]
 plot(compteurs_velos$Total.sur.2021, compteurs_velos$CompteurStation)
 
 cor(compteurs_velos$CompteurStation, compteurs_velos$Total.sur.2021)
-
-freq_stations = freq_stations[freq_stations$Trafic < 11000000, ]
-freq_stations = freq_stations[freq_stations$CmptVelo < 1500000, ]
-plot(freq_stations$Trafic, freq_stations$CmptVelo)
-
-cor(freq_stations$Trafic, freq_stations$CmptVelo)
