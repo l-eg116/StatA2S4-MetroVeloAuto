@@ -6,6 +6,8 @@ if (!require("psych")) install.packages("psych")
 library(psych)
 if (!require("vioplot")) install.packages("vioplot")
 library(vioplot)
+if (!require("corrplot")) install.packages("corrplot")
+library(corrplot)
 
 # Functions
 distance = function(x1, y1, x2, y2){
@@ -64,15 +66,31 @@ cm = data.frame(metro=freq_stations$Trafic, voit=freq_stations$CmptVoiture) # Co
 ## EXECUTER JUSQU'ICI ##
 
 # Boites à moustache
-boxplot(cv$velo * 5, cv$metro, cv$voit, main="Répartition des données", names=c("Vélos (x5)", "Métros", "Voitures"), xlab="Traffic par point", col=c("cyan", "#00AA91", "red"))
-vioplot(cv$velo * 5, cv$metro, cv$voit, main="Répartition des données", names=c("Vélos (x5)", "Métros", "Voitures"), xlab="Traffic par point", col=c("cyan", "#00AA91", "red"))
+boxplot(
+  cv$velo * 5,
+  cv$metro,
+  cv$voit,
+  main="Répartition des données",
+  names=c("Vélos (x5)", "Métros", "Voitures"),
+  xlab="Traffic par point",
+  col=c("cyan", "#00AA91", "red")
+)
+vioplot(
+  cv$velo * 5,
+  cv$metro,
+  cv$voit,
+  main="Répartition des données",
+  names=c("Vélos (x5)", "Métros", "Voitures"),
+  xlab="Traffic par point",
+  col=c("cyan", "#00AA91", "red")
+)
 
 # Nuages de points
-cv$voite = cv$voite[cv$metro < 10000000, ]
-cv$voite = cv$voite[cv$velo < 1500000, ]
+cv = cv[cv$metro < 10000000, ]
+cv = cv[cv$velo < 1500000, ]
 plot(cv$velo, cv$metro) # Nombre d'entrées dans les stations en fonction du nombre de cyclistes
 
-plot(cv$velo, cv$voite) # Nombre de véhicules en fonction du nombre de cyclistes
+plot(cv$velo, cv$voit) # Nombre de véhicules en fonction du nombre de cyclistes
 
 cm = cm[cm$metro < 15000000, ]
 cm = cm[cm$voit < 15000000, ]
@@ -81,6 +99,8 @@ plot(cm$metro, cm$voit) # Nombre de voiture en fonction du nombre de véhicules
 # Calcul des corrélations
 cor(cv$velo, cv$metro) # Calcul de corrélation  Métro -> vélo
 cor(cv$velo, cv$voite) # Calcul de corrélation  Voiture -> vélo
-corr.test(cv$voite[, c("velo", "metro", "voit")]) # Matrice de corrélation
+corr.test(cv$voit[, c("velo", "metro", "voit")]) # Matrice de corrélation
 
 cor(cm$metro, cm$voit) # Calcul de corrélation Voiture -> métro
+
+corrplot(cor(cv), method = "circle") # Corrélogramme
