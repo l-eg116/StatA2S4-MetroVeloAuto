@@ -61,6 +61,8 @@ freq_stations$CmptVoiture <- compteurs_voitures$Count[match(freq_stations$CmptVo
 cv = data.frame(velo=compteurs_velos$Total.sur.2021, metro=compteurs_velos$CompteurStation, voit=compteurs_velos$CompteurVoiture) # Compteurs vélos
 cm = data.frame(metro=freq_stations$Trafic, voit=freq_stations$CmptVoiture) # Compteurs métro
 
+## EXECUTER JUSQU'ICI ##
+
 # Boites à moustache
 boxplot(cv$velo * 5, cv$metro, cv$voit, main="Répartition des données", names=c("Vélos (x5)", "Métros", "Voitures"), xlab="Traffic par point", col=c("cyan", "#00AA91", "red"))
 vioplot(cv$velo * 5, cv$metro, cv$voit, main="Répartition des données", names=c("Vélos (x5)", "Métros", "Voitures"), xlab="Traffic par point", col=c("cyan", "#00AA91", "red"))
