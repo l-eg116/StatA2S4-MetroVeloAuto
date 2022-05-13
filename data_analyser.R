@@ -92,15 +92,15 @@ plot(cv$velo, cv$metro) # Nombre d'entrées dans les stations en fonction du nom
 
 plot(cv$velo, cv$voit) # Nombre de véhicules en fonction du nombre de cyclistes
 
-cm = cm[cm$metro < 15000000, ]
-cm = cm[cm$voit < 15000000, ]
+cm = cm[cm$metro < 10000000, ]
+cm = cm[cm$voit < 10000000, ]
 plot(cm$metro, cm$voit) # Nombre de voiture en fonction du nombre de véhicules
 
 # Calcul des corrélations
 cor(cv$velo, cv$metro) # Calcul de corrélation  Métro -> vélo
 cor(cv$velo, cv$voite) # Calcul de corrélation  Voiture -> vélo
-corr.test(cv$voit[, c("velo", "metro", "voit")]) # Matrice de corrélation
+cor(cv) # Matrice de corrélation
 
-cor(cm$metro, cm$voit) # Calcul de corrélation Voiture -> métro
+cor(cm) # Calcul de corrélation Voiture -> métro
 
 corrplot(cor(cv), method = "circle") # Corrélogramme
