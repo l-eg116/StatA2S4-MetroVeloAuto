@@ -4,6 +4,8 @@ if (!require("splitstackshape")) install.packages("splitstackshape")
 library(splitstackshape)
 if (!require("psych")) install.packages("psych")
 library(psych)
+if (!require("vioplot")) install.packages("vioplot")
+library(vioplot)
 
 # Functions
 distance = function(x1, y1, x2, y2){
@@ -59,7 +61,11 @@ freq_stations$CmptVoiture <- compteurs_voitures$Count[match(freq_stations$CmptVo
 cv = data.frame(velo=compteurs_velos$Total.sur.2021, metro=compteurs_velos$CompteurStation, voit=compteurs_velos$CompteurVoiture) # Compteurs vélos
 cm = data.frame(metro=freq_stations$Trafic, voit=freq_stations$CmptVoiture) # Compteurs métro
 
-# Plots
+# Boites à moustache
+boxplot(cv$velo * 5, cv$metro, cv$voit, main="Répartition des données", names=c("Vélos (x5)", "Métros", "Voitures"), xlab="Traffic par point", col=c("cyan", "#00AA91", "red"))
+vioplot(cv$velo * 5, cv$metro, cv$voit, main="Répartition des données", names=c("Vélos (x5)", "Métros", "Voitures"), xlab="Traffic par point", col=c("cyan", "#00AA91", "red"))
+
+# Nuages de points
 cv$voite = cv$voite[cv$metro < 10000000, ]
 cv$voite = cv$voite[cv$velo < 1500000, ]
 plot(cv$velo, cv$metro) # Nombre d'entrées dans les stations en fonction du nombre de cyclistes
