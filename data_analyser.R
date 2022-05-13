@@ -56,23 +56,23 @@ for(station in freq_stations$Station){ # Compteur voiture le plus proche de chaq
 freq_stations$CmptVoiture <- compteurs_voitures$Count[match(freq_stations$CmptVoitureID, compteurs_voitures$ï..Libelle)]
 
 # Raccourcis
-cv = data.frame(velo=compteurs_velos$Total.sur.2021, metro=compteurs_velos$CompteurStation, voit=compteurs_velos$CompteurVoiture)
-cm = data.frame(metro=freq_stations$Trafic, voit=freq_stations$CmptVoiture)
+cv = data.frame(velo=compteurs_velos$Total.sur.2021, metro=compteurs_velos$CompteurStation, voit=compteurs_velos$CompteurVoiture) # Compteurs vélos
+cm = data.frame(metro=freq_stations$Trafic, voit=freq_stations$CmptVoiture) # Compteurs métro
 
 # Plots
-compteurs_velos = compteurs_velos[compteurs_velos$CompteurStation < 10000000, ]
-compteurs_velos = compteurs_velos[compteurs_velos$Total.sur.2021 < 1500000, ]
-plot(compteurs_velos$Total.sur.2021, compteurs_velos$CompteurStation) # Nombre d'entrées dans les stations en fonction du nombre de cyclistes
+cv$voite = cv$voite[cv$metro < 10000000, ]
+cv$voite = cv$voite[cv$velo < 1500000, ]
+plot(cv$velo, cv$metro) # Nombre d'entrées dans les stations en fonction du nombre de cyclistes
 
-plot(compteurs_velos$Total.sur.2021, compteurs_velos$CompteurVoiture) # Nombre de véhicules en fonction du nombre de cyclistes
+plot(cv$velo, cv$voite) # Nombre de véhicules en fonction du nombre de cyclistes
 
-freq_stations = freq_stations[freq_stations$Trafic < 15000000, ]
-freq_stations = freq_stations[freq_stations$CmptVoiture < 15000000, ]
-plot(freq_stations$Trafic, freq_stations$CmptVoiture) # Nombre de voiture en fonction du nombre de véhicules
+cm = cm[cm$metro < 15000000, ]
+cm = cm[cm$voit < 15000000, ]
+plot(cm$metro, cm$voit) # Nombre de voiture en fonction du nombre de véhicules
 
 # Calcul des corrélations
-cor(compteurs_velos$Total.sur.2021, compteurs_velos$CompteurStation) # Calcul de corrélation  Métro -> vélo
-cor(compteurs_velos$Total.sur.2021, compteurs_velos$CompteurVoiture) # Calcul de corrélation  Voiture -> vélo
-corr.test(compteurs_velos[, c("Total.sur.2021", "CompteurStation", "CompteurVoiture")]) # Matrice de corrélation
+cor(cv$velo, cv$metro) # Calcul de corrélation  Métro -> vélo
+cor(cv$velo, cv$voite) # Calcul de corrélation  Voiture -> vélo
+corr.test(cv$voite[, c("velo", "metro", "voit")]) # Matrice de corrélation
 
-cor(freq_stations$Trafic, freq_stations$CmptVoiture) # Calcul de corrélation Voiture -> métro
+cor(cm$metro, cm$voit) # Calcul de corrélation Voiture -> métro
