@@ -103,4 +103,4 @@ cor(cv) # Matrice de corrélation
 
 cor(cm) # Calcul de corrélation Voiture -> métro
 
-corrplot(cor(cv), method = "circle") # Corrélogramme
+corrplot(cor(cv), method = "circle", title = "Corrélogramme pour les compteurs de vélos", addCoef.col = "black", addCoefasPercent = TRUE) # Corrélogramme
