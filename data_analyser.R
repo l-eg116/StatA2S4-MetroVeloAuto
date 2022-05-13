@@ -55,6 +55,10 @@ for(station in freq_stations$Station){ # Compteur voiture le plus proche de chaq
 }
 freq_stations$CmptVoiture <- compteurs_voitures$Count[match(freq_stations$CmptVoitureID, compteurs_voitures$ï..Libelle)]
 
+# Raccourcis
+cv = data.frame(velo=compteurs_velos$Total.sur.2021, metro=compteurs_velos$CompteurStation, voit=compteurs_velos$CompteurVoiture)
+cm = data.frame(metro=freq_stations$Trafic, voit=freq_stations$CmptVoiture)
+
 # Plots
 compteurs_velos = compteurs_velos[compteurs_velos$CompteurStation < 10000000, ]
 compteurs_velos = compteurs_velos[compteurs_velos$Total.sur.2021 < 1500000, ]
