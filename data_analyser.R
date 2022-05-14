@@ -93,13 +93,13 @@ vioplot(
 # Nuages de points
 cv = cv[cv$metro < 10000000, ]
 cv = cv[cv$velo < 1500000, ]
-plot(cv$velo, cv$metro) # Nombre d'entrées dans les stations en fonction du nombre de cyclistes
+plot(cv$velo, cv$metro, main = "Nombre de cyclistes en fonction d'utilisateurs du métro", xlab = "Cyclistes", ylab = "Utilisateurs du métro") # Nombre d'entrées dans les stations en fonction du nombre de cyclistes
 
-plot(cv$velo, cv$voit) # Nombre de véhicules en fonction du nombre de cyclistes
+plot(cv$velo, cv$voit, main = "Nombre de cyclistes en fonction d'automobilistes", xlab = "Cyclistes", ylab = "Automobilistes") # Nombre de véhicules en fonction du nombre de cyclistes
 
 cm = cm[cm$metro < 10000000, ]
 cm = cm[cm$voit < 10000000, ]
-plot(cm$metro, cm$voit) # Nombre de voiture en fonction du nombre de véhicules
+plot(cm$metro, cm$voit, main = "Nombre d'utilisateurs du métro en fonction d'automobilistes", xlab = "Utilisateurs du métro", ylab = "Automobilistes") # Nombre de voiture en fonction du nombre de véhicules
 
 # Calcul des corrélations
 cor(cv$velo, cv$metro) # Calcul de corrélation  Métro -> vélo
