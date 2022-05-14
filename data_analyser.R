@@ -65,6 +65,11 @@ cm = data.frame(metro=freq_stations$Trafic, voit=freq_stations$CmptVoiture) # Co
 
 ## EXECUTER JUSQU'ICI ##
 
+# Cartes
+plot(compteurs_voitures$geo_point.2, compteurs_voitures$geo_point.1, col = "red", pch = 19, main = "Carte des compteurs", xlab = "", ylab = "") +
+  points(compteurs_velos$Coordonnees_2, compteurs_velos$Coordonnees_1, col = "blue", pch = 19) +
+  points(freq_stations$GeoPoint_2, freq_stations$GeoPoint_1, col = "#00AA91", pch = 19)
+
 # Boites à moustache
 boxplot(
   cv$velo * 5,
