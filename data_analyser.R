@@ -106,6 +106,6 @@ cor(cv$velo, cv$metro) # Calcul de corrélation  Métro -> vélo
 cor(cv$velo, cv$voite) # Calcul de corrélation  Voiture -> vélo
 cor(cv) # Matrice de corrélation
 
-cor(cm) # Calcul de corrélation Voiture -> métro
+cor(cm$metro, cm$voit) # Calcul de corrélation Voiture -> métro
 
 corrplot(cor(cv), method = "circle", title = "Corrélogramme pour les compteurs de vélos", addCoef.col = "black", addCoefasPercent = TRUE) # Corrélogramme
